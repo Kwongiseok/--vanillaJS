@@ -1,6 +1,6 @@
 var time; // 시간 전역관리
 
-class Game {
+export default class Game {
   constructor(room) {
     this.room = room; // 방
     this.board = []; // 맵
@@ -170,22 +170,22 @@ class Game {
         $("#alert").text("당신이 승리했습니다!!");
         setTimeout(function () {
           location.reload();
-        }, 2000);
+        }, 1500);
       } else if (message.includes("disconnected")) {
         $("#alert").text(message);
         setTimeout(function () {
           location.reload();
-        }, 2000);
+        }, 1500);
       } else if (message.includes("draw")) {
         $("#alert").text(message);
         setTimeout(function () {
           location.reload();
-        }, 2000);
+        }, 1500);
       } else {
         $("#alert").text("You loose!");
         setTimeout(function () {
           location.reload();
-        }, 2000);
+        }, 1500);
       }
 
       $(".menu").css("display", "block");

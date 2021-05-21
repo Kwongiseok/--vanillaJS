@@ -91,7 +91,9 @@ class Game {
           room: game.getRoom(),
           message: winner,
         });
+        console.log(winner);
         game.gameEnd(winner);
+
         clearInterval(time);
       }
     }, 1000);
@@ -101,6 +103,7 @@ class Game {
   displayBoard(msg) {
     $(".menu").css("display", "none");
     $(".gameBoard").css("display", "block");
+    $(".chat").css("display", "block");
     $("#userHello").html(msg);
     this.createBoard();
   }
@@ -164,6 +167,7 @@ class Game {
 
     setTimeout(function () {
       $(".gameBoard").css("display", "none");
+      $(".chat").css("display", "none");
       $(".center").empty();
 
       if (message.includes(player.getColor())) {
@@ -171,7 +175,7 @@ class Game {
         setTimeout(function () {
           location.reload();
         }, 1500);
-      } else if (message.includes("disconnected")) {
+      } else if (message.includes("접속끊김")) {
         $("#message").text(message);
         setTimeout(function () {
           location.reload();
@@ -296,7 +300,7 @@ class Game {
   onDisconnected() {
     socket.emit("gameEnded", {
       room: this.getRoom(),
-      message: "상대편이 도망가서 승리했습니다!",
+      message: "접속끊김 : 상대편이 도망가서 승리했습니다!",
     });
   }
 

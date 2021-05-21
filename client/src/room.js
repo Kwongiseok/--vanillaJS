@@ -6,6 +6,32 @@ function init() {
   const player1 = "white";
   const player2 = "black";
 
+  // 채팅 관련
+  const chatForm = document.getElementById("chat-form");
+  const chatBox = document.getElementById("messages");
+
+  chatForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const message = e.target.m.value;
+    socket.emit("chat message", message);
+    e.target.m.value = "";
+    chatBox.appendChild(makeMessage(message, false));
+  });
+
+  socket.on("chat message", (message) => {
+    chatBox.appendChild(makeMessage(message, true));
+  });
+
+  const makeMessage = (message, isOthers) => {
+    const msgBox = document.createElement("div");
+    const classname = isOthers
+      ? "others-message-wrapper"
+      : "my-message-wrapper";
+    msgBox.className = classname;
+    msgBox.innerText = message;
+    return msgBox;
+  };
+
   // 새로운 게임 생성
   $("#make-new-button").on("click", () => {
     const name = $("#userName1").val();
@@ -17,7 +43,7 @@ function init() {
     socket.emit("createGame", { name });
   });
 
-  // Join an existing game on the entered roomId.
+  // 방에 참여
   $("#enter-game-button").on("click", () => {
     const name = $("#userName2").val();
     const room = $("#roomId").val();
@@ -88,7 +114,7 @@ function init() {
 
   // 게임 종료 메세지
   socket.on("gameEnd", (data) => {
-    game.endGameMessage(data.message);
+    game.gameEnd(data.message);
   });
 
   // 에러 처리
@@ -98,8 +124,8 @@ function init() {
   });
 
   socket.on("userDisconnect", () => {
-    const message = `You win! Other player was disconnected!`;
-    game.endGameMessage(message);
+    const message = `당신이 승리했습니다!!`;
+    game.gameEnd(message);
   });
 }
 

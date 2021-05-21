@@ -37,7 +37,6 @@ io.on("connection", (socket) => {
     }
   });
 
-  //Handle the turn played by the player and notify the other player
   socket.on("playTurn", (data) => {
     socket.broadcast.to(data.room).emit("turnPlayed", {
       tile: data.tile,
@@ -45,7 +44,6 @@ io.on("connection", (socket) => {
     });
   });
 
-  //Notify players about winner and leave room
   socket.on("gameEnded", (data) => {
     numberOfRooms--;
     socket.broadcast.to(data.room).emit("gameEnd", data);
@@ -64,7 +62,12 @@ io.on("connection", (socket) => {
       socket.leave();
     });
   });
+
+  // 채팅
+  socket.on("chat message", function (message) {
+    console.log(message);
+    socket.broadcast.emit("chat message", message);
+  });
 });
 
-//listen on port 8888
 server.listen(process.env.PORT || 8888);

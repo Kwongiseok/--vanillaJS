@@ -3,12 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../client/styles/style.css" />
     <title>네트워크 과제 오목 게임</title>
   </head>
   <body>
-    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <div class="container">
+      <div class="menu">
+        <h1 id="game-title">소켓을 이용한 오목</h1>
+        <h2 id="message"></h2>
+        <h3 id="title">오목 게임!!</h3>
+        <div id="game-form">
+          <h4>새로운 게임 만들기</h4>
+          <input
+            type="text"
+            name="name"
+            id="userName1"
+            placeholder="사용자의 닉네임을 입력해주세요."
+            required
+          />
+          <button id="make-new-button">새로운 게임 생성</button>
+          <br /><br />
+          <h4>기존의 게임방 참여하기</h4>
+          <input
+            type="text"
+            name="name"
+            id="userName2"
+            placeholder="사용자의 닉네임을 입력해주세요."
+            required
+          />
+          <input
+            type="text"
+            name="roomId"
+            id="roomId"
+            placeholder="참여하실 방 ID를 입력해주세요."
+            required
+          />
+          <button id="enter-game-button">게임 참여</button>
+        </div>
+      </div>
+      <div class="gameBoard">
+        <h2 id="userHello"></h2>
+        <h3 id="turn"></h3>
+        <div id="color"></div>
+        <div class="center"></div>
+        <div id="time">당신의 턴이 아닙니다!</div>
+        <button class="goBack" onclick="window.location.reload()">
+          뒤로 가기
+        </button>
+      </div>
+    </div>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../socket.io/socket.io.js"></script>
-    <script src="../client/src/index.js" type="module" defer></script>
+    <script src="/client/src/Player.js" defer></script>
+    <script src="/client/src/Game.js" defer></script>
+    <script src="/client/src/room.js" defer></script>
   </body>
 </html>

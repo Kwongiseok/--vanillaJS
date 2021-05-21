@@ -1,15 +1,14 @@
-import Game from "./Game.js";
-import Player from "./Player.js";
-
-const socket = io.connect("http://Localhost:8888");
+const socket = io.connect("http://localhost:8888");
+var player;
+var game;
 
 function init() {
   const player1 = "white";
   const player2 = "black";
 
   // 새로운 게임 생성
-  $("#new").on("click", () => {
-    const name = $("#makeName").val();
+  $("#make-new-button").on("click", () => {
+    const name = $("#userName1").val();
     if (!name) {
       alert("사용자의 닉네임을 입력해주세요!");
       return;
@@ -19,9 +18,9 @@ function init() {
   });
 
   // Join an existing game on the entered roomId.
-  $("#join").on("click", () => {
-    const name = $("#roomJoin").val();
-    const room = $("#room").val();
+  $("#enter-game-button").on("click", () => {
+    const name = $("#userName2").val();
+    const room = $("#roomId").val();
 
     if (!name || !room) {
       alert("접속할 방의 정보를 확인해주세요!");
@@ -32,28 +31,28 @@ function init() {
   });
 
   // 엔터입력
-  $("#makeName").keyup((e) => {
+  $("#userName1").keyup((e) => {
     if (e.which == 13) {
-      $("#new").click();
+      $("#make-new-button").click();
     }
   });
 
-  $("#roomJoin").keyup((e) => {
+  $("#roomId").keyup((e) => {
     if (e.which == 13) {
-      $("#join").click();
+      $("#enter-game-button").click();
     }
   });
 
-  $("#room").keyup((e) => {
+  $("#userName2").keyup((e) => {
     if (e.which == 13) {
-      $("#join").click();
+      $("#enter-game-button").click();
     }
   });
 
   // 새로운 게임이 만들어짐
   socket.on("newGame", (data) => {
-    const message = `Hello ${data.name}<br/> Game ID: 
-        ${data.room}<br/> Waiting for player 2...`;
+    const message = `안녕하세요 ${data.name}<br/> 게임 방 ID: 
+        ${data.room}<br/> 참여자를 기다리고 있습니다...`;
 
     // 방만들어짐
     game = new Game(data.room);
@@ -71,13 +70,13 @@ function init() {
   socket.on("player2", (data) => {
     const message = `반갑습니다. ${data.name}`;
 
-    // Create game for player 2
+    // player2 를 위한 게임
     game = new Game(data.room);
     game.displayBoard(message);
     player.setMyTurn(true);
   });
 
-  //After played turn update board and give new turn to other player
+  // 턴 업데이트 과정
   socket.on("turnPlayed", (data) => {
     let row = game.getRow(data.tile);
     let col = game.getCol(data.tile);
@@ -87,12 +86,12 @@ function init() {
     player.setMyTurn(true);
   });
 
-  //Notify users that game has ended
+  // 게임 종료 메세지
   socket.on("gameEnd", (data) => {
     game.endGameMessage(data.message);
   });
 
-  //If there is error, send message and reload page
+  // 에러 처리
   socket.on("err", (data) => {
     alert(data.message);
     location.reload();

@@ -1,6 +1,6 @@
 var time; // 시간 전역관리
 
-export default class Game {
+class Game {
   constructor(room) {
     this.room = room; // 방
     this.board = []; // 맵
@@ -92,7 +92,7 @@ export default class Game {
           message: winner,
         });
         game.gameEnd(winner);
-        clear(time);
+        clearInterval(time);
       }
     }, 1000);
   }
@@ -107,15 +107,15 @@ export default class Game {
 
   // 게임 판 업데이트
   updateBoard(color, row, col, tile) {
-    clear(time);
+    clearInterval(time);
     $("#time").text(`당신의 턴이 아닙니다!`);
     $(".center").prop(`disabled`, true);
-    if (!player.getCurrentTurn()) {
+    if (!player.getMyTurn()) {
       game.setTimer();
       $(".center").prop(`disabled`, false);
     }
     $(`#${tile}`)
-      .css("backgroundImage", `url(images/${color}Pawn.png)`)
+      .css("backgroundImage", `url(/client/public/images/${color}Pawn.png)`)
       .prop("disabled", true);
     this.board[row][col] = color[0];
     this.changes++;
@@ -152,7 +152,7 @@ export default class Game {
     const clickedTile = $(tile).attr("id");
 
     // 턴 체인지
-    socket.emit("updateTurn", {
+    socket.emit("playTurn", {
       tile: clickedTile,
       room: this.getRoom(),
     });
@@ -167,22 +167,22 @@ export default class Game {
       $(".center").empty();
 
       if (message.includes(player.getColor())) {
-        $("#alert").text("당신이 승리했습니다!!");
+        $("#message").text("당신이 승리했습니다!!");
         setTimeout(function () {
           location.reload();
         }, 1500);
       } else if (message.includes("disconnected")) {
-        $("#alert").text(message);
+        $("#message").text(message);
         setTimeout(function () {
           location.reload();
         }, 1500);
       } else if (message.includes("draw")) {
-        $("#alert").text(message);
+        $("#message").text(message);
         setTimeout(function () {
           location.reload();
         }, 1500);
       } else {
-        $("#alert").text("You loose!");
+        $("#message").text("You loose!");
         setTimeout(function () {
           location.reload();
         }, 1500);

@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #4e362b;
+  color: #b5a397;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-weight: lighter;
+  font-size: 120%;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+h2 {
+  text-decoration: underline;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-form {
+  text-align: center;
+  border: 3px solid #b5a397;
+  border-radius: 10%;
+  padding: 3em;
+  padding-top: 2em;
+}
+
+.tile {
+  display: block;
+  float: left;
+  width: 3em;
+  height: 3em;
+  font-family: Helvetica;
+  background-image: url("../public/images/cross.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  padding: 1em;
+  background-color: #4e362b;
+  border: 1px solid #b5a397;
+  color: #b5a397;
+  border-radius: 5%;
+  font-size: 0.8em;
+}
+
+button:not(.tile) {
+  font-weight: bold;
+  padding: 1em;
+  background-color: #4e362b;
+  border: 1px solid #b5a397;
+  color: #b5a397;
+  border-radius: 5%;
+  cursor: pointer;
+}
+
+button:hover:not(.tile) {
+  background-color: #b5a397;
+  border: 1px solid #4e362b;
+  color: #4e362b;
+}
+
+.gameBoard {
+  display: none;
+}
+
+.center {
+  margin: 0 auto;
+  width: 600px;
+  height: 600px;
+}
+
+#color {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #b5a397;
+  border-radius: 20%;
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: -2.5em;
+}
+
+#time {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+}
+
+.goBack {
+  width: 600px;
+}

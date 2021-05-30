@@ -124,7 +124,7 @@ function init() {
   });
 
   socket.on("userDisconnect", () => {
-    const message = `당신이 승리했습니다!!`;
+    const message = `접속끊김 : 당신이 승리했습니다!!`;
     game.gameEnd(message);
   });
 }

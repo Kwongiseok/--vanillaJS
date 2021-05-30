@@ -169,7 +169,6 @@ class Game {
       $(".gameBoard").css("display", "none");
       $(".chat").css("display", "none");
       $(".center").empty();
-
       if (message.includes(player.getColor())) {
         $("#message").text("당신이 승리했습니다!!");
         setTimeout(function () {
@@ -309,7 +308,7 @@ class Game {
     const winColor = player.getColor();
     socket.emit("gameEnded", {
       room: this.getRoom(),
-      winColor,
+      message: winColor,
     });
     this.gameEnd(winColor);
   }

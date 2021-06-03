@@ -1,4 +1,4 @@
-const socket = io.connect("http://localhost:8888");
+const socket = io.connect("https://omok-socket.herokuapp.com/");
 var player;
 var game;
 
